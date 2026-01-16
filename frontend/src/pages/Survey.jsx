@@ -15,7 +15,7 @@ import {
   Settings,
   MessageSquare
 } from 'lucide-react'
-import RedPanda, { JourneyPanda } from '../components/RedPanda'
+import RedPanda, { JourneyPanda, Sticker } from '../components/RedPanda'
 
 const API_BASE = '/api'
 
@@ -37,6 +37,7 @@ function Survey({ user, setUser }) {
     personalityStyle: ''
   })
   const [insight, setInsight] = useState(null)
+  const [stickers, setStickers] = useState([])
 
   useEffect(() => {
     fetchOptions()
@@ -147,13 +148,14 @@ function Survey({ user, setUser }) {
     }
   ]
 
-  const toggleSelection = (field, value) => {
+  const toggleSelection = (field, value, emoji) => {
     setFormData(prev => ({
       ...prev,
       [field]: prev[field].includes(value)
         ? prev[field].filter(v => v !== value)
         : [...prev[field], value]
     }))
+    if (emoji) showSticker(emoji)
   }
 
   const handleSubmit = async () => {
@@ -185,7 +187,7 @@ function Survey({ user, setUser }) {
 
   const canProceed = () => {
     switch (step) {
-      case 0: return formData.name.trim() !== '' && formData.yearLevel !== ''
+      case 0: return formData.name.trim() !== '' && formData.school.trim() !== '' && formData.yearLevel !== ''
       case 1: return formData.whereYouWantToBe.trim() !== ''
       case 2: return formData.challenges.length > 0
       case 3: return formData.goals.length > 0
@@ -200,6 +202,7 @@ function Survey({ user, setUser }) {
   const nextStep = () => {
     if (step < steps.length - 1) {
       setStep(step + 1)
+      showSticker('🎉')
     } else {
       handleSubmit()
     }
@@ -207,6 +210,14 @@ function Survey({ user, setUser }) {
 
   const prevStep = () => {
     if (step > 0) setStep(step - 1)
+  }
+
+  const showSticker = (emoji = '🐼') => {
+    const id = Date.now()
+    setStickers(prev => [...prev, { id, emoji }])
+    setTimeout(() => {
+      setStickers(prev => prev.filter(s => s.id !== id))
+    }, 2000)
   }
 
   const progress = ((step + 1) / steps.length) * 100
@@ -358,7 +369,7 @@ function Survey({ user, setUser }) {
                     {options?.yearLevels?.map((level) => (
                       <button
                         key={level.id}
-                        onClick={() => setFormData({ ...formData, yearLevel: level.id })}
+                        onClick={() => { setFormData({ ...formData, yearLevel: level.id }); showSticker('🎓') }}
                         className={`p-4 rounded-2xl border-3 text-left transition-all ${
                           formData.yearLevel === level.id
                             ? 'border-coral bg-coral/10'
@@ -406,7 +417,7 @@ function Survey({ user, setUser }) {
                 {options.challenges.map((challenge) => (
                   <button
                     key={challenge.id}
-                    onClick={() => toggleSelection('challenges', challenge.id)}
+                    onClick={() => toggleSelection('challenges', challenge.id, challenge.emoji)}
                     className={`w-full p-4 rounded-2xl border-3 text-left transition-all ${
                       formData.challenges.includes(challenge.id)
                         ? 'border-coral bg-coral/10'
@@ -434,7 +445,7 @@ function Survey({ user, setUser }) {
                 {options.goals.map((goal) => (
                   <button
                     key={goal.id}
-                    onClick={() => toggleSelection('goals', goal.id)}
+                    onClick={() => toggleSelection('goals', goal.id, goal.emoji)}
                     className={`w-full p-4 rounded-2xl border-3 text-left transition-all ${
                       formData.goals.includes(goal.id)
                         ? 'border-royal bg-royal/10'
@@ -462,7 +473,7 @@ function Survey({ user, setUser }) {
                 {options.industries.map((industry) => (
                   <button
                     key={industry}
-                    onClick={() => toggleSelection('industries', industry)}
+                    onClick={() => toggleSelection('industries', industry, '✅')}
                     className={`chip text-base ${
                       formData.industries.includes(industry) ? 'chip-selected' : ''
                     }`}
@@ -486,7 +497,7 @@ function Survey({ user, setUser }) {
                   {options.identities.map((identity) => (
                     <button
                       key={identity}
-                      onClick={() => toggleSelection('identities', identity)}
+                      onClick={() => toggleSelection('identities', identity, '🤝')}
                       className={`chip text-base ${
                         formData.identities.includes(identity) ? 'chip-selected' : ''
                       }`}
@@ -519,7 +530,7 @@ function Survey({ user, setUser }) {
                     ].map((option) => (
                       <button
                         key={option.value}
-                        onClick={() => setFormData({ ...formData, mentorLevels: option.value })}
+                        onClick={() => { setFormData({ ...formData, mentorLevels: option.value }); showSticker('⚙️') }}
                         className={`w-full p-4 rounded-2xl border-3 text-left transition-all ${
                           formData.mentorLevels === option.value
                             ? 'border-royal bg-royal/10'
@@ -555,7 +566,7 @@ function Survey({ user, setUser }) {
                 {options.personalityStyles.map((style) => (
                   <button
                     key={style.id}
-                    onClick={() => setFormData({ ...formData, personalityStyle: style.id })}
+                    onClick={() => { setFormData({ ...formData, personalityStyle: style.id }); showSticker(style.emoji) }}
                     className={`w-full p-4 rounded-2xl border-3 text-left transition-all ${
                       formData.personalityStyle === style.id
                         ? 'border-coral bg-coral/10'
@@ -612,6 +623,9 @@ function Survey({ user, setUser }) {
           </motion.div>
         </AnimatePresence>
       </div>
+      {stickers.map(sticker => (
+        <Sticker key={sticker.id} emoji={sticker.emoji} />
+      ))}
     </div>
   )
 }

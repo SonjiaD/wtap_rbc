@@ -160,4 +160,30 @@ export function JourneyPanda({ progress = 0, className }) {
   return <RedPanda size={size} mood={mood} className={className} />
 }
 
+export function Sticker({ emoji = '🐼', onComplete, className = '' }) {
+  return (
+    <motion.div
+      className={`fixed z-50 pointer-events-none ${className}`}
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{
+        scale: [0, 1.5, 1],
+        opacity: [0, 1, 0],
+        y: [0, -100, -200]
+      }}
+      transition={{
+        duration: 2,
+        ease: 'easeOut',
+        onComplete
+      }}
+      style={{
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)'
+      }}
+    >
+      <div className="text-6xl">{emoji}</div>
+    </motion.div>
+  )
+}
+
 export default RedPanda
