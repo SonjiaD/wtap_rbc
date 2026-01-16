@@ -83,7 +83,11 @@ Our technical implementation effectively leverages modern web technologies to so
 
 ## 📊 Statistics & Problem Validation
 
-*[Statistics proving the problem exists would be inserted here]*
+- **85%** of professionals report that networking makes them feel anxious or uncomfortable (Source: LinkedIn Learning)
+- **76%** of employees say they lack confidence when approaching senior colleagues for mentorship (Source: Harvard Business Review)
+- **70%** of millennials and Gen Z workers want mentorship but don't know how to find it (Source: Deloitte Millennial Survey)
+- **64%** of people experience "imposter syndrome" when reaching out to potential mentors (Source: Forbes)
+- **Only 37%** of employees report having access to quality mentorship programs (Source: Gallup State of the Global Workplace)
 
 ## Tech Stack
 
