@@ -13,7 +13,8 @@ export const mentors = [
     industries: ["Technology", "E-commerce"],
     reachOutHistory: "Reached out to 5+ mentors during university",
     responseRate: "Usually responds within 2 days",
-    bio: "I remember being terrified to send my first LinkedIn message. Now I love helping students navigate that same journey."
+    bio: "I remember being terrified to send my first LinkedIn message. Now I love helping students navigate that same journey.",
+    source: "sample"
   },
   {
     id: 2,
@@ -29,7 +30,8 @@ export const mentors = [
     industries: ["Technology", "Product"],
     reachOutHistory: "Actively mentors 3 students per semester",
     responseRate: "Usually responds within 1 day",
-    bio: "The tech industry can feel intimidating, especially if you don't see people who look like you. I'm here to change that."
+    bio: "The tech industry can feel intimidating, especially if you don't see people who look like you. I'm here to change that.",
+    source: "sample"
   },
   {
     id: 3,
@@ -45,7 +47,8 @@ export const mentors = [
     industries: ["Finance", "Technology", "Data Science"],
     reachOutHistory: "Conducts monthly coffee chats with students",
     responseRate: "Usually responds within 3 days",
-    bio: "As an international student, I had no network. Cold outreach changed my career trajectory completely."
+    bio: "As an international student, I had no network. Cold outreach changed my career trajectory completely.",
+    source: "sample"
   },
   {
     id: 4,
@@ -61,7 +64,8 @@ export const mentors = [
     industries: ["Design", "Technology", "Creative"],
     reachOutHistory: "Love hearing from aspiring designers",
     responseRate: "Usually responds within 2 days",
-    bio: "I was so nervous about reaching out that I almost didn't. That one message led to my dream job."
+    bio: "I was so nervous about reaching out that I almost didn't. That one message led to my dream job.",
+    source: "sample"
   },
   {
     id: 5,
@@ -77,7 +81,8 @@ export const mentors = [
     industries: ["Finance", "Investment Banking"],
     reachOutHistory: "Sent 50+ cold emails to break into IB",
     responseRate: "Usually responds within 4 days",
-    bio: "I had zero finance connections. Every opportunity came from a cold email. Happy to share what worked."
+    bio: "I had zero finance connections. Every opportunity came from a cold email. Happy to share what worked.",
+    source: "sample"
   },
   {
     id: 6,
@@ -93,7 +98,8 @@ export const mentors = [
     industries: ["Startups", "Technology", "Entrepreneurship"],
     reachOutHistory: "Office hours every Friday for students",
     responseRate: "Usually responds within 1 day",
-    bio: "The best founders I know started by asking for help. Don't let imposter syndrome stop you."
+    bio: "The best founders I know started by asking for help. Don't let imposter syndrome stop you.",
+    source: "sample"
   },
   {
     id: 7,
@@ -109,7 +115,8 @@ export const mentors = [
     industries: ["Consulting", "Strategy"],
     reachOutHistory: "Mentored 20+ students through recruiting",
     responseRate: "Usually responds within 2 days",
-    bio: "Consulting recruiting is a mystery if you don't know anyone in it. I'm here to demystify it."
+    bio: "Consulting recruiting is a mystery if you don't know anyone in it. I'm here to demystify it.",
+    source: "sample"
   },
   {
     id: 8,
@@ -125,7 +132,8 @@ export const mentors = [
     industries: ["Technology", "AI/ML", "Research"],
     reachOutHistory: "Active in Women in ML communities",
     responseRate: "Usually responds within 3 days",
-    bio: "Breaking into AI felt impossible until I found the right mentors. Now I want to be that for others."
+    bio: "Breaking into AI felt impossible until I found the right mentors. Now I want to be that for others.",
+    source: "sample"
   }
 ];
 

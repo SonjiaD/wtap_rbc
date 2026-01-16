@@ -1,12 +1,14 @@
 import express from 'express';
-import OpenAI from 'openai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const router = express.Router();
 
-// Initialize OpenAI client (optional - will fall back to templates if not configured)
-let openai = null;
-if (process.env.OPENAI_API_KEY) {
-  openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+// Initialize Gemini AI client (optional - will fall back to templates if not configured)
+let genAI = null;
+let model = null;
+if (process.env.GEMINI_API_KEY) {
+  genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 }
 
 // Email templates based on personality style
@@ -79,39 +81,45 @@ router.post('/generate', async (req, res) => {
   };
 
   try {
-    // Try AI generation if OpenAI is configured
-    if (openai && process.env.USE_AI === 'true') {
-      const prompt = `Generate a cold outreach email for a student reaching out to a professional mentor.
+    // Try AI generation if Gemini is configured
+    if (model && process.env.USE_AI === 'true') {
+      const prompt = `You are an expert career counselor helping students write authentic, personalized cold outreach emails to potential mentors.
 
-Student info:
+Generate a compelling cold outreach email for a student reaching out to a professional mentor. The email should feel genuine, respectful, and confident - not generic or robotic.
+
+STUDENT PROFILE:
 - Name: ${user.name}
 - School: ${user.school}
-- Interested in: ${user.industries?.join(', ') || 'their field'}
-- Communication style: ${personalityStyle}
-- Main anxieties: ${user.anxieties?.join(', ') || 'reaching out'}
+- Academic interests/career goals: ${user.industries?.join(', ') || 'professional development'}
+- Communication style preference: ${personalityStyle}
+- Main anxieties/challenges: ${user.anxieties?.join(', ') || 'building professional connections'}
 
-Mentor info:
+MENTOR PROFILE:
 - Name: ${mentor.name}
-- Role: ${mentor.role} at ${mentor.company}
-- School: ${mentor.school}
-- Background: ${mentor.background}
-- Why they match: ${mentorWithReasons.matchReasons.join(', ')}
+- Current role: ${mentor.role} at ${mentor.company}
+- Education: ${mentor.school}
+- Professional background: ${mentor.background || 'experienced professional'}
+- Why they match this student: ${mentorWithReasons.matchReasons.join(', ')}
 
-Write a ${personalityStyle} email that:
-1. Is authentic and not robotic
-2. Mentions a specific connection point
-3. Makes a clear, small ask (15-20 min chat)
-4. Is under 150 words
+WRITING REQUIREMENTS:
+1. **Authenticity**: Write as if the student is genuinely excited about this specific person's journey
+2. **Personalization**: Reference specific details about the mentor's background or the matching reasons
+3. **${personalityStyle.toUpperCase()} TONE**: ${personalityStyle === 'direct' ? 'Professional and concise' : personalityStyle === 'warm' ? 'Friendly and enthusiastic' : personalityStyle === 'curious' ? 'Inquisitive and engaged' : 'Thoughtful and reflective'}
+4. **Clear Value Exchange**: Show what the student brings to the conversation (preparedness, enthusiasm, fresh perspective)
+5. **Small, Specific Ask**: Request 15-20 minutes for a focused conversation
+6. **Word Count**: Keep under 150 words total
 
-Return JSON with "subject" and "body" fields.`;
+RESPONSE FORMAT:
+Return only valid JSON with this exact structure:
+{
+  "subject": "Brief, compelling subject line (under 60 characters)",
+  "body": "The complete email body with proper greeting and signature"
+}`;
 
-      const completion = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: prompt }],
-        response_format: { type: "json_object" }
-      });
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const generated = JSON.parse(response.text());
 
-      const generated = JSON.parse(completion.choices[0].message.content);
       return res.json({
         subject: generated.subject,
         body: generated.body,
@@ -133,13 +141,20 @@ Return JSON with "subject" and "body" fields.`;
     });
 
   } catch (error) {
-    console.error('Email generation error:', error);
-    // Fall back to templates on error
-    const template = emailTemplates.warm;
-    res.json({
-      subject: template.subject.replace('${school}', mentor.school),
-      body: template.template(user, mentorWithReasons),
-      source: 'template'
+    console.error('Email generation error:', error.message);
+
+    // Enhanced fallback with better error messages
+    const template = emailTemplates[personalityStyle] || emailTemplates.warm;
+    const body = template.template(user, mentorWithReasons);
+    const subject = template.subject
+      .replace('${school}', mentor.school || 'your alma mater')
+      .replace('${company}', mentor.company || 'your company');
+
+    res.status(error.status || 500).json({
+      subject,
+      body,
+      source: 'template',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'AI generation failed, using template'
     });
   }
 });

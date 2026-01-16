@@ -184,8 +184,25 @@ function Matches({ user, setSelectedMentor }) {
 
                   {/* Tags */}
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {mentor.tags?.slice(0, 3).map((tag, i) => (
-                      <span key={i} className="chip text-xs">
+                    {/* Source indicator */}
+                    {mentor.source === 'google_search' && (
+                      <span className="chip text-xs bg-blue-100 text-blue-700 border-blue-200">
+                        🔍 Google Search
+                      </span>
+                    )}
+                    {mentor.source === 'ai_suggested' && (
+                      <span className="chip text-xs bg-purple-100 text-purple-700 border-purple-200">
+                        🤖 AI Suggested
+                      </span>
+                    )}
+                    {!mentor.source && (
+                      <span className="chip text-xs bg-green-100 text-green-700 border-green-200">
+                        👥 Sample Mentor
+                      </span>
+                    )}
+                    {/* Regular tags */}
+                    {mentor.tags?.slice(0, 2).map((tag, i) => (
+                      <span key={`tag-${i}`} className="chip text-xs">
                         {tag}
                       </span>
                     ))}

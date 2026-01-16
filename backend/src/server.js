@@ -6,6 +6,7 @@ import mentorRoutes from './routes/mentors.js';
 import emailRoutes from './routes/email.js';
 import prepRoutes from './routes/prep.js';
 import reflectionRoutes from './routes/reflection.js';
+import mentorSearchRoutes from './routes/mentor-search.js';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use('/api/mentors', mentorRoutes);
 app.use('/api/email', emailRoutes);
 app.use('/api/prep', prepRoutes);
 app.use('/api/reflection', reflectionRoutes);
+app.use('/api/mentor-search', mentorSearchRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

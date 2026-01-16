@@ -280,7 +280,7 @@ ${user?.name || 'Student'}`
                       className="flex items-center gap-2 text-slate-600 hover:text-slate-800"
                     >
                       <RefreshCw className="w-4 h-4" />
-                      Regenerate
+                      {email.source === 'ai' ? 'Regenerate with AI' : 'Regenerate'}
                     </button>
                     <button
                       onClick={handleShowVariations}

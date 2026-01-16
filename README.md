@@ -60,8 +60,10 @@ Approachable's originality lies in its focus on the human side of mentorship tec
 
 ## 🛠️ Use of Technology
 
-Our technical implementation effectively leverages modern web technologies to solve the mentorship confidence problem:
+Our technical implementation effectively leverages modern web technologies and AI to solve the mentorship confidence problem:
 
+- **🤖 Google Gemini 1.5 Flash Integration**: Advanced AI email personalization that creates authentic, mentor-specific outreach messages based on detailed user and mentor profiles (free tier with generous limits)
+- **🔍 Google Custom Search Integration**: Real-time mentor discovery using Google search to find actual professionals in specific industries and locations
 - **⚛️ React 18 + Vite**: Fast, interactive user experience for reflection and matching
 - **🚀 Node.js/Express**: Scalable backend for survey processing and mentor matching
 - **🎨 Tailwind CSS + Framer Motion**: Beautiful, animated interface that feels supportive
@@ -129,9 +131,11 @@ Open http://localhost:5176 to see the application.
 
 - `POST /api/survey/submit` - Submit user profile and preferences
 - `POST /api/mentors/match` - Get personalized mentor matches
-- `POST /api/email/generate` - Create outreach messages
+- `POST /api/email/generate` - Create AI-powered outreach messages
 - `POST /api/prep/generate` - Generate conversation preparation
 - `POST /api/reflection/submit` - Track post-chat growth
+- `POST /api/mentor-search/search` - Search for real mentors via Google
+- `POST /api/mentor-search/suggest` - Get AI-suggested mentors based on profile
 
 ## License
 
