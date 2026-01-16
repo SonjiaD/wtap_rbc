@@ -280,8 +280,9 @@ function Reflection({ user, mentor }) {
               <div className="flex items-center justify-center gap-2">
                 {[1, 2, 3, 4, 5].map((rating) => (
                   <button
+                    type="button"
                     key={rating}
-                    onClick={() => setFormData({ ...formData, overallRating: rating })}
+                    onClick={() => setFormData(prev => ({ ...prev, overallRating: rating }))}
                     className={`w-12 h-12 rounded-xl transition-all ${
                       formData.overallRating >= rating
                         ? 'bg-amber-400 scale-110'
@@ -314,7 +315,7 @@ function Reflection({ user, mentor }) {
                   min="1"
                   max="10"
                   value={formData.anxietyBefore}
-                  onChange={(e) => setFormData({ ...formData, anxietyBefore: parseInt(e.target.value) })}
+                  onChange={(e) => setFormData(prev => ({ ...prev, anxietyBefore: parseInt(e.target.value) }))}
                   className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-red-500"
                 />
                 <div className="flex justify-between text-sm mt-2">
@@ -331,7 +332,7 @@ function Reflection({ user, mentor }) {
                   min="1"
                   max="10"
                   value={formData.anxietyAfter}
-                  onChange={(e) => setFormData({ ...formData, anxietyAfter: parseInt(e.target.value) })}
+                  onChange={(e) => setFormData(prev => ({ ...prev, anxietyAfter: parseInt(e.target.value) }))}
                   className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-green-500"
                 />
                 <div className="flex justify-between text-sm mt-2">
@@ -356,6 +357,7 @@ function Reflection({ user, mentor }) {
             <div className="space-y-3">
               {wentWellOptions.map((option) => (
                 <button
+                  type="button"
                   key={option}
                   onClick={() => toggleOption('whatWentWell', option)}
                   className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
@@ -381,6 +383,7 @@ function Reflection({ user, mentor }) {
               <p className="text-sm text-slate-500 mb-4">Select any areas you'd like to work on (optional)</p>
               {improveOptions.map((option) => (
                 <button
+                  type="button"
                   key={option}
                   onClick={() => toggleOption('whatToImprove', option)}
                   className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
@@ -405,7 +408,7 @@ function Reflection({ user, mentor }) {
             <div>
               <textarea
                 value={formData.keyTakeaways}
-                onChange={(e) => setFormData({ ...formData, keyTakeaways: e.target.value })}
+                onChange={(e) => setFormData(prev => ({ ...prev, keyTakeaways: e.target.value }))}
                 placeholder="What's the most valuable thing you learned from this conversation?"
                 rows={5}
                 className="input-field resize-none"
@@ -427,12 +430,13 @@ function Reflection({ user, mentor }) {
                     { value: false, label: 'Probably not' }
                   ].map((option) => (
                     <button
+                      type="button"
                       key={String(option.value)}
-                      onClick={() => setFormData({ ...formData, wouldReachOutAgain: option.value })}
+                      onClick={() => setFormData(prev => ({ ...prev, wouldReachOutAgain: option.value }))}
                       className={`flex-1 p-4 rounded-xl border-2 transition-all ${
                         formData.wouldReachOutAgain === option.value
-                          ? 'border-primary-500 bg-primary-50'
-                          : 'border-slate-200 hover:border-primary-300'
+                          ? 'border-blue-500 bg-blue-100 text-blue-700'
+                          : 'border-slate-200 hover:border-blue-300 text-slate-700'
                       }`}
                     >
                       {option.label}
@@ -449,12 +453,13 @@ function Reflection({ user, mentor }) {
                     { value: false, label: 'Not yet' }
                   ].map((option) => (
                     <button
+                      type="button"
                       key={String(option.value)}
-                      onClick={() => setFormData({ ...formData, followUpPlanned: option.value })}
+                      onClick={() => setFormData(prev => ({ ...prev, followUpPlanned: option.value }))}
                       className={`flex-1 p-4 rounded-xl border-2 transition-all ${
                         formData.followUpPlanned === option.value
-                          ? 'border-primary-500 bg-primary-50'
-                          : 'border-slate-200 hover:border-primary-300'
+                          ? 'border-blue-500 bg-blue-100 text-blue-700'
+                          : 'border-slate-200 hover:border-blue-300 text-slate-700'
                       }`}
                     >
                       {option.label}
@@ -468,6 +473,7 @@ function Reflection({ user, mentor }) {
           {/* Navigation */}
           <div className="flex items-center justify-between mt-8 pt-6 border-t border-slate-100">
             <button
+              type="button"
               onClick={() => setStep(step - 1)}
               disabled={step === 0}
               className={`flex items-center gap-2 font-medium ${
@@ -479,6 +485,7 @@ function Reflection({ user, mentor }) {
             </button>
 
             <button
+              type="button"
               onClick={() => {
                 if (step === steps.length - 1) {
                   handleSubmit()

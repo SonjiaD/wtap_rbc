@@ -208,7 +208,7 @@ function PrepChat({ user, mentor }) {
               </button>
 
               {expandedSections.agenda && (
-                <div className="space-y-3 pl-13">
+                <div className="space-y-3">
                   {prep?.agenda?.structure.map((item, i) => (
                     <div key={i} className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
                       <div className="flex items-center gap-2 min-w-[80px]">
@@ -256,7 +256,6 @@ function PrepChat({ user, mentor }) {
                       key={i}
                       className="flex items-start gap-3 p-4 bg-slate-50 rounded-xl group hover:bg-slate-100 transition-colors"
                     >
-                      <Star className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                       <p className="flex-1 text-slate-700">{question}</p>
                       <button
                         onClick={() => copyQuestion(question, i)}
@@ -306,9 +305,9 @@ function PrepChat({ user, mentor }) {
                   {Object.entries(prep?.talkingPoints || {}).map(([category, points]) => (
                     <div key={category}>
                       <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-2">
-                        {category === 'introduction' ? '👋 Introduction' :
-                         category === 'connection' ? '🤝 Building Connection' :
-                         '👋 Closing'}
+                        {category === 'introduction' ? 'Introduction' :
+                         category === 'connection' ? 'Building Connection' :
+                         'Closing'}
                       </h3>
                       <ul className="space-y-2">
                         {points.map((point, i) => (
