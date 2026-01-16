@@ -27,14 +27,21 @@ function Survey({ user, setUser }) {
   const [formData, setFormData] = useState({
     name: '',
     school: '',
-    yearLevel: '',
-    challenges: [],
-    industries: [],
+    socialComfort: {
+      meetingNewPeople: '',
+      conversationsExperienced: '',
+      askingQuestions: '',
+      networkingStatement: ''
+    },
     identities: [],
-    goals: [],
-    whereYouWantToBe: '',
-    mentorLevels: 1,
-    personalityStyle: ''
+    selfDescribeText: '',
+    currentChallengesText: '',
+    currentChallenges: [],
+    mentorshipArea: '',
+    direction: '',
+    interests: [],
+    interestOtherText: '',
+    excitements: []
   })
   const [insight, setInsight] = useState(null)
   const [stickers, setStickers] = useState([])
@@ -51,37 +58,93 @@ function Survey({ user, setUser }) {
     } catch (err) {
       console.error('Failed to fetch options:', err)
       setOptions({
-        challenges: [
-          { id: 'no-common', label: 'Not much in common with potential mentors', description: "Hard to find relatable people", emoji: "😕" },
-          { id: 'social-anxiety', label: 'Social anxiety about speaking to new people', description: "Nervous about reaching out", emoji: "😰" },
-          { id: 'intimidated', label: 'Feeling intimidated by people in higher positions', description: "They seem so far ahead", emoji: "🙈" },
-          { id: 'questions', label: "Not knowing what questions to ask", description: "What do I even say?", emoji: "❓" },
-          { id: 'burden', label: "Worried about wasting someone's time", description: "Don't want to be a bother", emoji: "⏰" },
-          { id: 'rejection', label: 'Fear of being judged or rejected', description: "What if they say no?", emoji: "💭" }
+        socialComfort: {
+          meetingNewPeople: [
+            { value: 'very_comfortable', label: 'Very comfortable' },
+            { value: 'somewhat_comfortable', label: 'Somewhat comfortable' },
+            { value: 'neutral', label: 'Neutral' },
+            { value: 'somewhat_anxious', label: 'Somewhat anxious' },
+            { value: 'very_anxious', label: 'Very anxious' }
+          ],
+          conversationsExperienced: [
+            { value: 'confident_curios', label: 'Confident and curious' },
+            { value: 'slightly_intimidated', label: 'Slightly intimidated but engaged' },
+            { value: 'quiet_unsure', label: 'Quiet and unsure what to ask' },
+            { value: 'overwhelmed_nervous', label: 'Overwhelmed and nervous' }
+          ],
+          askingQuestions: [
+            { value: 'very_comfortable', label: 'Very comfortable' },
+            { value: 'somewhat_comfortable', label: 'Somewhat comfortable' },
+            { value: 'only_encouraged', label: 'Only if encouraged' },
+            { value: 'uncomfortable', label: 'Uncomfortable' }
+          ],
+          networkingStatement: [
+            { value: 'enjoy_networking', label: 'I enjoy networking and meeting new people' },
+            { value: 'okay_effort', label: 'I\'m okay with it but it takes effort' },
+            { value: 'avoid_possible', label: 'I avoid it when possible' },
+            { value: 'want_anxious', label: 'I want to network but feel anxious doing so' }
+          ]
+        },
+        identities: [
+          { value: 'student', label: 'Student' },
+          { value: 'early_career', label: 'Early-career professional' },
+          { value: 'mid_career', label: 'Mid-career professional' },
+          { value: 'career_changer', label: 'Career changer' },
+          { value: 'founder', label: 'Founder / entrepreneur' },
+          { value: 'woman_female', label: 'Woman / female-identifying' },
+          { value: 'man_male', label: 'Man / male-identifying' },
+          { value: 'non_binary', label: 'Non-binary / gender diverse' },
+          { value: 'international', label: 'International background' },
+          { value: 'immigrant', label: 'Immigrant' },
+          { value: 'refugee', label: 'Refugee or displaced background' },
+          { value: 'first_gen', label: 'First-generation (in education or career)' },
+          { value: 'underrepresented', label: 'Underrepresented background in my field' },
+          { value: 'returning_work', label: 'Returning to work after a break' },
+          { value: 'caregiver', label: 'Caregiver responsibilities' },
+          { value: 'self_describe', label: 'Prefer to self-describe', allowText: true },
+          { value: 'prefer_not', label: 'Prefer not to say' }
         ],
-        industries: ['Technology', 'Finance', 'Consulting', 'Healthcare', 'Design', 'Marketing', 'Data Science', 'Product Management', 'Entrepreneurship', 'Research', 'Law', 'Non-profit'],
-        identities: ['First Generation Student', 'International Student', 'Women in STEM', 'BIPOC in Tech', 'LGBTQ+', 'Career Changer', 'Non-traditional Background', 'Rural/Small Town Background', 'Transfer Student', 'Mature Student'],
-        goals: [
-          { id: 'experiences', label: "Getting to know other people's experiences", description: 'Learn from their journey', emoji: "🎯" },
-          { id: 'career', label: 'Getting career advice', description: 'Understand different paths', emoji: "🛤️" },
-          { id: 'industry', label: 'Learning about an industry', description: "What's it really like?", emoji: "🏢" },
-          { id: 'skills', label: 'Figuring out what skills to develop', description: 'What should I learn?', emoji: "📚" },
-          { id: 'network', label: 'Building my professional network', description: 'Make real connections', emoji: "🤝" },
-          { id: 'confidence', label: 'Building confidence in networking', description: 'Get more comfortable', emoji: "💪" }
+        currentChallenges: [
+          { value: 'lack_clarity', label: 'Lack of clarity about my career direction' },
+          { value: 'feeling_behind', label: 'Feeling behind compared to peers' },
+          { value: 'imposter_syndrome', label: 'Imposter syndrome' },
+          { value: 'burnout', label: 'Burnout or lack of motivation' },
+          { value: 'education_cert', label: 'Navigating education or certifications' },
+          { value: 'transitioning_careers', label: 'Transitioning careers or industries' },
+          { value: 'workplace_confidence', label: 'Workplace confidence or communication' },
+          { value: 'building_network', label: 'Building a professional network' },
+          { value: 'balancing_life', label: 'Balancing personal life and career' }
         ],
-        yearLevels: [
-          { id: 'year1', label: '1st Year', description: 'Just starting out' },
-          { id: 'year2', label: '2nd Year', description: 'Finding my path' },
-          { id: 'year3', label: '3rd Year', description: 'Getting serious' },
-          { id: 'year4', label: '4th Year+', description: 'Almost there' },
-          { id: 'grad', label: 'Graduate Student', description: 'Advanced studies' },
-          { id: 'recent', label: 'Recent Graduate', description: 'Just finished' }
+        mentorshipAreas: [
+          { value: 'career_direction', label: 'Career direction' },
+          { value: 'skill_development', label: 'Skill development' },
+          { value: 'education_planning', label: 'Education planning' },
+          { value: 'confidence_communication', label: 'Confidence and communication' },
+          { value: 'networking', label: 'Networking' },
+          { value: 'leadership', label: 'Leadership or advancement' },
+          { value: 'personal_growth', label: 'Personal growth alongside career' }
         ],
-        personalityStyles: [
-          { id: 'direct', label: 'Direct & to the point', description: 'Keep it short and sweet', emoji: "🎯" },
-          { id: 'warm', label: 'Warm & personable', description: 'I like building rapport', emoji: "☀️" },
-          { id: 'curious', label: 'Curious & inquisitive', description: 'Lots of questions!', emoji: "🤔" },
-          { id: 'thoughtful', label: 'Thoughtful & prepared', description: 'I research beforehand', emoji: "📝" }
+        directions: [
+          { value: 'adventurer', label: '🌍 Adventurer', description: 'I\'m exploring options, interests, or possibilities.' },
+          { value: 'architect', label: '🧭 Architect', description: 'I have a specific career or goal I\'m working toward.' }
+        ],
+        interests: [
+          { value: 'technology', label: 'Technology' },
+          { value: 'business_entrepreneurship', label: 'Business / Entrepreneurship' },
+          { value: 'healthcare', label: 'Healthcare' },
+          { value: 'arts_creative', label: 'Arts / Creative fields' },
+          { value: 'education', label: 'Education' },
+          { value: 'social_impact', label: 'Social impact / Nonprofit' },
+          { value: 'science_research', label: 'Science / Research' },
+          { value: 'trades_labor', label: 'Trades / Skilled labor' },
+          { value: 'other', label: 'Other', allowText: true }
+        ],
+        excitements: [
+          { value: 'solving_problems', label: 'Solving problems' },
+          { value: 'helping_people', label: 'Helping people' },
+          { value: 'creativity', label: 'Creativity' },
+          { value: 'stability', label: 'Stability' },
+          { value: 'income_potential', label: 'Income potential' }
         ]
       })
     } finally {
@@ -89,64 +152,75 @@ function Survey({ user, setUser }) {
     }
   }
 
-  const steps = [
-    {
-      id: 'intro',
-      title: "Let's get to know you!",
-      subtitle: 'Your red panda friend wants to learn about you',
-      icon: User,
-      emoji: "👋"
-    },
-    {
-      id: 'reflection',
-      title: 'Where do you want to go?',
-      subtitle: "Reflect on your goals and where you see yourself",
-      icon: Compass,
-      emoji: "🧭"
-    },
-    {
-      id: 'challenges',
-      title: 'What makes this hard for you?',
-      subtitle: "Be honest - this helps us match you better",
-      icon: Heart,
-      emoji: "💭"
-    },
-    {
-      id: 'goals',
-      title: 'What do you want from mentorship?',
-      subtitle: 'Select what matters most to you',
-      icon: Target,
-      emoji: "🎯"
-    },
-    {
-      id: 'industries',
-      title: 'What fields interest you?',
-      subtitle: "We'll find mentors in these areas",
-      icon: Briefcase,
-      emoji: "🏢"
-    },
-    {
-      id: 'identities',
-      title: 'What identities resonate with you?',
-      subtitle: 'Find mentors who truly get you (optional)',
-      icon: User,
-      emoji: "🤝"
-    },
-    {
-      id: 'settings',
-      title: 'Customize your matches',
-      subtitle: 'How many levels ahead should your mentor be?',
-      icon: Settings,
-      emoji: "⚙️"
-    },
-    {
-      id: 'style',
-      title: 'How do you like to communicate?',
-      subtitle: "We'll tailor your outreach messages",
-      icon: MessageSquare,
-      emoji: "💬"
+  const getSteps = () => {
+    const baseSteps = [
+      {
+        id: 'intro',
+        title: "Let's get to know you!",
+        subtitle: 'Your red panda friend wants to learn about you',
+        icon: User,
+        emoji: "👋"
+      },
+      {
+        id: 'social_comfort',
+        title: 'Confidence & Social Comfort',
+        subtitle: 'Help us match you with mentors at a comfortable experience level',
+        icon: Heart,
+        emoji: "💭"
+      },
+      {
+        id: 'identities',
+        title: 'About You',
+        subtitle: 'Find mentors who understand similar experiences (optional)',
+        icon: User,
+        emoji: "🤝"
+      },
+      {
+        id: 'challenges',
+        title: 'Current Challenges',
+        subtitle: 'What challenges are you facing right now?',
+        icon: Target,
+        emoji: "🎯"
+      },
+      {
+        id: 'mentorship_area',
+        title: 'Mentorship Focus',
+        subtitle: 'What area do you most want mentorship in?',
+        icon: Briefcase,
+        emoji: "🎯"
+      },
+      {
+        id: 'direction',
+        title: 'Your Direction',
+        subtitle: 'Where are you in your career journey?',
+        icon: Compass,
+        emoji: "🧭"
+      }
+    ]
+
+    if (formData.direction === 'adventurer') {
+      baseSteps.push(
+        {
+          id: 'interests',
+          title: 'Exploring Interests',
+          subtitle: 'What topics or fields are you curious about?',
+          icon: Sparkles,
+          emoji: "🌍"
+        },
+        {
+          id: 'excitement',
+          title: 'What Excites You?',
+          subtitle: 'What aspects of these interests excite you most?',
+          icon: Sparkles,
+          emoji: "✨"
+        }
+      )
     }
-  ]
+
+    return baseSteps
+  }
+
+  const steps = getSteps()
 
   const toggleSelection = (field, value, emoji) => {
     setFormData(prev => ({
@@ -186,15 +260,15 @@ function Survey({ user, setUser }) {
   }
 
   const canProceed = () => {
-    switch (step) {
-      case 0: return formData.name.trim() !== '' && formData.school.trim() !== ''
-      case 1: return formData.whereYouWantToBe.trim() !== ''
-      case 2: return formData.challenges.length > 0
-      case 3: return formData.goals.length > 0
-      case 4: return formData.industries.length > 0
-      case 5: return true // Optional
-      case 6: return true // Has default
-      case 7: return formData.personalityStyle !== ''
+    switch (steps[step]?.id) {
+      case 'intro': return formData.name.trim() !== '' && formData.school.trim() !== ''
+      case 'social_comfort': return Object.values(formData.socialComfort).every(v => v !== '')
+      case 'identities': return true // Optional
+      case 'challenges': return formData.currentChallengesText.trim() !== '' || formData.currentChallenges.length > 0
+      case 'mentorship_area': return formData.mentorshipArea !== ''
+      case 'direction': return formData.direction !== ''
+      case 'interests': return formData.interests.length > 0
+      case 'excitement': return formData.excitements.length > 0
       default: return true
     }
   }
@@ -335,7 +409,7 @@ function Survey({ user, setUser }) {
             </div>
 
             {/* Step 0: Intro */}
-            {step === 0 && (
+            {steps[step]?.id === 'intro' && (
               <div className="space-y-5">
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-2">
@@ -361,23 +435,97 @@ function Survey({ user, setUser }) {
                     className="input-field"
                   />
                 </div>
+              </div>
+            )}
+
+            {/* Step 1: Social Comfort */}
+            {steps[step]?.id === 'social_comfort' && options && (
+              <div className="space-y-6">
+                <div className="bg-lavender/30 rounded-2xl p-5 border-2 border-lavender">
+                  <p className="text-slate-700 font-medium">
+                    This helps us match you with mentors at a comfortable experience level. There are no right or wrong answers. Answer honestly.
+                  </p>
+                </div>
+
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-3">
-                    Where are you in your journey?
+                    How do you typically feel about meeting new people one-on-one?
                   </label>
                   <div className="grid grid-cols-2 gap-3">
-                    {options?.yearLevels?.map((level) => (
+                    {options.socialComfort?.meetingNewPeople?.map((option) => (
                       <button
-                        key={level.id}
-                        onClick={() => { setFormData({ ...formData, yearLevel: level.id }); showSticker('🎓') }}
-                        className={`p-4 rounded-2xl border-3 text-left transition-all ${
-                          formData.yearLevel === level.id
+                        key={option.value}
+                        onClick={() => setFormData(prev => ({ ...prev, socialComfort: { ...prev.socialComfort, meetingNewPeople: option.value } }))}
+                        className={`p-3 rounded-xl border-2 text-center transition-all ${
+                          formData.socialComfort.meetingNewPeople === option.value
                             ? 'border-coral bg-coral/10'
                             : 'border-sky/30 hover:border-coral/50'
                         }`}
                       >
-                        <p className="font-bold text-slate-800">{level.label}</p>
-                        <p className="text-sm text-slate-500">{level.description}</p>
+                        <p className="font-medium text-slate-800">{option.label}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-3">
+                    In conversations with more experienced people, you usually feel:
+                  </label>
+                  <div className="grid grid-cols-1 gap-3">
+                    {options.socialComfort?.conversationsExperienced?.map((option) => (
+                      <button
+                        key={option.value}
+                        onClick={() => setFormData(prev => ({ ...prev, socialComfort: { ...prev.socialComfort, conversationsExperienced: option.value } }))}
+                        className={`p-3 rounded-xl border-2 text-left transition-all ${
+                          formData.socialComfort.conversationsExperienced === option.value
+                            ? 'border-coral bg-coral/10'
+                            : 'border-sky/30 hover:border-coral/50'
+                        }`}
+                      >
+                        <p className="font-medium text-slate-800">{option.label}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-3">
+                    How comfortable are you asking questions when you don't understand something?
+                  </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {options.socialComfort?.askingQuestions?.map((option) => (
+                      <button
+                        key={option.value}
+                        onClick={() => setFormData(prev => ({ ...prev, socialComfort: { ...prev.socialComfort, askingQuestions: option.value } }))}
+                        className={`p-3 rounded-xl border-2 text-center transition-all ${
+                          formData.socialComfort.askingQuestions === option.value
+                            ? 'border-coral bg-coral/10'
+                            : 'border-sky/30 hover:border-coral/50'
+                        }`}
+                      >
+                        <p className="font-medium text-slate-800">{option.label}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-3">
+                    Which statement fits you best?
+                  </label>
+                  <div className="space-y-3">
+                    {options.socialComfort?.networkingStatement?.map((option) => (
+                      <button
+                        key={option.value}
+                        onClick={() => setFormData(prev => ({ ...prev, socialComfort: { ...prev.socialComfort, networkingStatement: option.value } }))}
+                        className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
+                          formData.socialComfort.networkingStatement === option.value
+                            ? 'border-coral bg-coral/10'
+                            : 'border-sky/30 hover:border-coral/50'
+                        }`}
+                      >
+                        <p className="font-medium text-slate-800">{option.label}</p>
                       </button>
                     ))}
                   </div>
@@ -385,80 +533,104 @@ function Survey({ user, setUser }) {
               </div>
             )}
 
-            {/* Step 1: Reflection */}
-            {step === 1 && (
-              <div className="space-y-5">
-                <div className="bg-lavender/30 rounded-2xl p-5 border-2 border-lavender">
-                  <p className="text-slate-700 font-medium mb-3">
-                    Take a moment to reflect on where you want to be. This helps us understand what kind of mentor would be most helpful for you.
-                  </p>
+            {/* Step 2: Identities */}
+            {steps[step]?.id === 'identities' && options && (
+              <div className="space-y-4">
+                <div className="flex items-start gap-3 p-4 bg-peach/30 rounded-2xl text-slate-700">
+                  <span className="text-xl">💝</span>
+                  <span className="font-medium">
+                    Which parts of your identity feel most relevant to your journey right now? Select any that you feel comfortable sharing. This helps us connect you with mentors who may understand similar experiences.
+                  </span>
                 </div>
+                <div className="flex flex-wrap gap-3">
+                  {options.identities.map((identity) => (
+                    <button
+                      key={identity.value}
+                      onClick={() => {
+                        if (identity.value === 'self_describe') {
+                          toggleSelection('identities', identity.value, '🤝')
+                        } else {
+                          toggleSelection('identities', identity.value, '🤝')
+                        }
+                      }}
+                      className={`chip text-base ${
+                        formData.identities.includes(identity.value) ? 'chip-selected' : ''
+                      }`}
+                    >
+                      {identity.label}
+                    </button>
+                  ))}
+                </div>
+                {formData.identities.includes('self_describe') && (
+                  <div>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">
+                      Please describe:
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.selfDescribeText}
+                      onChange={(e) => setFormData({ ...formData, selfDescribeText: e.target.value })}
+                      placeholder="Your description"
+                      className="input-field"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Step 3: Challenges */}
+            {steps[step]?.id === 'challenges' && options && (
+              <div className="space-y-5">
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-2">
-                    Where do you see yourself in 2-3 years? What does your ideal role look like?
+                    Describe some challenges you are currently facing? (Optional - you can also select from the options below)
                   </label>
                   <textarea
-                    value={formData.whereYouWantToBe}
-                    onChange={(e) => setFormData({ ...formData, whereYouWantToBe: e.target.value })}
-                    placeholder="e.g., Working as a product manager at a tech company, or exploring different roles in finance to figure out what I like..."
-                    rows={5}
+                    value={formData.currentChallengesText}
+                    onChange={(e) => setFormData({ ...formData, currentChallengesText: e.target.value })}
+                    placeholder="Share your challenges here..."
+                    rows={4}
                     className="input-field resize-none"
                   />
-                  <p className="text-sm text-slate-500 mt-2">
-                    Don't worry if you're not sure - that's what mentors can help with!
-                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-3">
+                    Select all that apply:
+                  </label>
+                  <div className="flex flex-wrap gap-3">
+                    {options.currentChallenges.map((challenge) => (
+                      <button
+                        key={challenge.value}
+                        onClick={() => toggleSelection('currentChallenges', challenge.value, '✅')}
+                        className={`chip text-base ${
+                          formData.currentChallenges.includes(challenge.value) ? 'chip-selected' : ''
+                        }`}
+                      >
+                        {challenge.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
 
-            {/* Step 2: Challenges */}
-            {step === 2 && options && (
+            {/* Step 4: Mentorship Area */}
+            {steps[step]?.id === 'mentorship_area' && options && (
               <div className="space-y-3">
-                {options.challenges.map((challenge) => (
+                {options.mentorshipAreas.map((area) => (
                   <button
-                    key={challenge.id}
-                    onClick={() => toggleSelection('challenges', challenge.id, challenge.emoji)}
+                    key={area.value}
+                    onClick={() => { setFormData({ ...formData, mentorshipArea: area.value }); showSticker('🎯') }}
                     className={`w-full p-4 rounded-2xl border-3 text-left transition-all ${
-                      formData.challenges.includes(challenge.id)
-                        ? 'border-coral bg-coral/10'
-                        : 'border-sky/30 hover:border-coral/50'
-                    }`}
-                  >
-                    <div className="flex items-center gap-4">
-                      <span className="text-2xl">{challenge.emoji}</span>
-                      <div className="flex-1">
-                        <p className="font-bold text-slate-800">{challenge.label}</p>
-                        <p className="text-sm text-slate-500">{challenge.description}</p>
-                      </div>
-                      {formData.challenges.includes(challenge.id) && (
-                        <CheckCircle2 className="w-6 h-6 text-coral flex-shrink-0" />
-                      )}
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Step 3: Goals */}
-            {step === 3 && options && (
-              <div className="space-y-3">
-                {options.goals.map((goal) => (
-                  <button
-                    key={goal.id}
-                    onClick={() => toggleSelection('goals', goal.id, goal.emoji)}
-                    className={`w-full p-4 rounded-2xl border-3 text-left transition-all ${
-                      formData.goals.includes(goal.id)
+                      formData.mentorshipArea === area.value
                         ? 'border-royal bg-royal/10'
                         : 'border-sky/30 hover:border-royal/50'
                     }`}
                   >
-                    <div className="flex items-center gap-4">
-                      <span className="text-2xl">{goal.emoji}</span>
-                      <div className="flex-1">
-                        <p className="font-bold text-slate-800">{goal.label}</p>
-                        <p className="text-sm text-slate-500">{goal.description}</p>
-                      </div>
-                      {formData.goals.includes(goal.id) && (
+                    <div className="flex items-center justify-between">
+                      <p className="font-bold text-slate-800">{area.label}</p>
+                      {formData.mentorshipArea === area.value && (
                         <CheckCircle2 className="w-6 h-6 text-royal flex-shrink-0" />
                       )}
                     </div>
@@ -467,120 +639,90 @@ function Survey({ user, setUser }) {
               </div>
             )}
 
-            {/* Step 4: Industries */}
-            {step === 4 && options && (
-              <div className="flex flex-wrap gap-3">
-                {options.industries.map((industry) => (
-                  <button
-                    key={industry}
-                    onClick={() => toggleSelection('industries', industry, '✅')}
-                    className={`chip text-base ${
-                      formData.industries.includes(industry) ? 'chip-selected' : ''
-                    }`}
-                  >
-                    {industry}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Step 5: Identities */}
-            {step === 5 && options && (
-              <div className="space-y-4">
-                <div className="flex items-start gap-3 p-4 bg-peach/30 rounded-2xl text-slate-700">
-                  <span className="text-xl">💝</span>
-                  <span className="font-medium">
-                    This helps us match you with mentors who share similar experiences. It's completely optional and private.
-                  </span>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  {options.identities.map((identity) => (
-                    <button
-                      key={identity}
-                      onClick={() => toggleSelection('identities', identity, '🤝')}
-                      className={`chip text-base ${
-                        formData.identities.includes(identity) ? 'chip-selected' : ''
-                      }`}
-                    >
-                      {identity}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Step 6: Settings - Mentor Levels */}
-            {step === 6 && (
-              <div className="space-y-6">
-                <div className="bg-lavender/30 rounded-2xl p-5 border-2 border-lavender">
-                  <p className="text-slate-700 font-medium">
-                    Being matched with someone just a few steps ahead can feel less intimidating than connecting with a senior executive. You can always expand later!
-                  </p>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-4">
-                    How many levels ahead should your mentor be?
-                  </label>
-                  <div className="space-y-3">
-                    {[
-                      { value: 1, label: '1 level ahead', description: 'Upper-year students or recent grads who just went through what you\'re experiencing', recommended: true },
-                      { value: 2, label: '2 levels ahead', description: 'Early-career professionals who remember being in your shoes' },
-                      { value: 3, label: '3+ levels ahead', description: 'Mid-career professionals with broader perspective' }
-                    ].map((option) => (
-                      <button
-                        key={option.value}
-                        onClick={() => { setFormData({ ...formData, mentorLevels: option.value }); showSticker('⚙️') }}
-                        className={`w-full p-4 rounded-2xl border-3 text-left transition-all ${
-                          formData.mentorLevels === option.value
-                            ? 'border-royal bg-royal/10'
-                            : 'border-sky/30 hover:border-royal/50'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <p className="font-bold text-slate-800">{option.label}</p>
-                              {option.recommended && (
-                                <span className="px-2 py-0.5 bg-coral/20 text-coral text-xs font-bold rounded-full">
-                                  Recommended
-                                </span>
-                              )}
-                            </div>
-                            <p className="text-sm text-slate-500 mt-1">{option.description}</p>
-                          </div>
-                          {formData.mentorLevels === option.value && (
-                            <CheckCircle2 className="w-6 h-6 text-royal flex-shrink-0" />
-                          )}
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Step 7: Personality Style */}
-            {step === 7 && options && (
+            {/* Step 5: Direction */}
+            {steps[step]?.id === 'direction' && options && (
               <div className="space-y-3">
-                {options.personalityStyles.map((style) => (
+                {options.directions.map((dir) => (
                   <button
-                    key={style.id}
-                    onClick={() => { setFormData({ ...formData, personalityStyle: style.id }); showSticker(style.emoji) }}
+                    key={dir.value}
+                    onClick={() => { setFormData({ ...formData, direction: dir.value }); showSticker('🧭') }}
                     className={`w-full p-4 rounded-2xl border-3 text-left transition-all ${
-                      formData.personalityStyle === style.id
+                      formData.direction === dir.value
                         ? 'border-coral bg-coral/10'
                         : 'border-sky/30 hover:border-coral/50'
                     }`}
                   >
                     <div className="flex items-center gap-4">
-                      <span className="text-2xl">{style.emoji}</span>
+                      <span className="text-2xl">{dir.label.split(' ')[0]}</span>
                       <div className="flex-1">
-                        <p className="font-bold text-slate-800">{style.label}</p>
-                        <p className="text-sm text-slate-500">{style.description}</p>
+                        <p className="font-bold text-slate-800">{dir.label}</p>
+                        <p className="text-sm text-slate-500">{dir.description}</p>
                       </div>
-                      {formData.personalityStyle === style.id && (
+                      {formData.direction === dir.value && (
                         <CheckCircle2 className="w-6 h-6 text-coral flex-shrink-0" />
+                      )}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Step 6: Interests */}
+            {steps[step]?.id === 'interests' && options && (
+              <div className="space-y-4">
+                <div className="flex flex-wrap gap-3">
+                  {options.interests.map((interest) => (
+                    <button
+                      key={interest.value}
+                      onClick={() => {
+                        if (interest.value === 'other') {
+                          toggleSelection('interests', interest.value, '✅')
+                        } else {
+                          toggleSelection('interests', interest.value, '✅')
+                        }
+                      }}
+                      className={`chip text-base ${
+                        formData.interests.includes(interest.value) ? 'chip-selected' : ''
+                      }`}
+                    >
+                      {interest.label}
+                    </button>
+                  ))}
+                </div>
+                {formData.interests.includes('other') && (
+                  <div>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">
+                      Please specify:
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.interestOtherText}
+                      onChange={(e) => setFormData({ ...formData, interestOtherText: e.target.value })}
+                      placeholder="Other interests"
+                      className="input-field"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Step 7: Excitement */}
+            {steps[step]?.id === 'excitement' && options && (
+              <div className="space-y-3">
+                {options.excitements.map((excitement) => (
+                  <button
+                    key={excitement.value}
+                    onClick={() => toggleSelection('excitements', excitement.value, '✨')}
+                    className={`w-full p-4 rounded-2xl border-3 text-left transition-all ${
+                      formData.excitements.includes(excitement.value)
+                        ? 'border-royal bg-royal/10'
+                        : 'border-sky/30 hover:border-royal/50'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <p className="font-bold text-slate-800">{excitement.label}</p>
+                      {formData.excitements.includes(excitement.value) && (
+                        <CheckCircle2 className="w-6 h-6 text-royal flex-shrink-0" />
                       )}
                     </div>
                   </button>
