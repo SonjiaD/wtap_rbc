@@ -412,15 +412,15 @@ function PrepChat({ user, mentor }) {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
-              className="card bg-gradient-to-br from-primary-500 to-accent-500 text-white"
+              className="card bg-gradient-to-br from-coral to-coral-light text-white"
             >
-              <h3 className="font-bold mb-2">After your chat</h3>
-              <p className="text-white/80 text-sm mb-4">
+              <h3 className="font-bold mb-2 text-black">After your chat</h3>
+              <p className="text-black/80 text-sm mb-4">
                 Reflect on your conversation to track your growth
               </p>
               <Link
                 to="/reflection"
-                className="w-full bg-white text-primary-600 font-semibold py-3 px-4 rounded-xl hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
+                className="w-full bg-white text-coral font-semibold py-3 px-4 rounded-xl hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
               >
                 Complete Reflection
                 <ArrowRight className="w-4 h-4" />

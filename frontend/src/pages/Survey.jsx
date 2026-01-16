@@ -797,6 +797,33 @@ function Survey({ user, setUser }) {
         <RedPanda size="xs" mood="shy" />
       </motion.div>
 
+      {/* Sidebar navigation */}
+      <motion.div
+        className="fixed top-1/2 right-6 transform -translate-y-1/2 z-20"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+      >
+        <div className="bg-white rounded-full p-2 shadow-lg border-2 border-sky/30">
+          <div className="flex flex-col gap-2">
+            {steps.map((stepItem, index) => (
+              <button
+                key={index}
+                onClick={() => setStep(index)}
+                className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
+                  index === step
+                    ? 'bg-coral text-white shadow-lg shadow-coral/30 scale-110'
+                    : 'bg-sky/20 text-slate-600 hover:bg-coral/20 hover:text-coral'
+                }`}
+                title={`${index + 1}. ${stepItem.title}`}
+              >
+                <span className="text-sm font-bold">{index + 1}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+
       {stickers.map(sticker => (
         <Sticker key={sticker.id} emoji={sticker.emoji} />
       ))}

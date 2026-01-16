@@ -246,6 +246,33 @@ ${user?.name || 'Student'}`
                     </div>
                   </div>
 
+                  {/* Sidebar navigation */}
+                  <motion.div
+                    className="fixed top-1/2 right-6 transform -translate-y-1/2 z-20"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                  >
+                    <div className="bg-white rounded-full p-2 shadow-lg border-2 border-sky/30">
+                      <div className="flex flex-col gap-2">
+                        <button
+                          onClick={() => navigate('/prep')}
+                          className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 bg-primary-500 text-white shadow-lg shadow-primary-500/30 scale-110"
+                          title="Prepare for Coffee Chat"
+                        >
+                          <ArrowRight className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() => navigate('/matches')}
+                          className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 bg-sky/20 text-slate-600 hover:bg-primary-500/20 hover:text-primary-500"
+                          title="Back to Matches"
+                        >
+                          <ArrowLeft className="w-5 h-5" />
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+
                   {/* Actions */}
                   <div className="flex items-center justify-between mt-6 pt-6 border-t border-slate-100">
                     <button
@@ -301,7 +328,7 @@ ${user?.name || 'Student'}`
             )}
           </div>
 
-          {/* Sidebar */}
+            {/* Sidebar moved to bottom */}
           <div className="space-y-6">
             {/* Mentor Card */}
             <motion.div
@@ -328,26 +355,26 @@ ${user?.name || 'Student'}`
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
-              className="card bg-gradient-to-br from-primary-500 to-accent-500 text-white"
+              className="card bg-gradient-to-br from-coral to-coral-light text-white"
             >
-              <h3 className="font-bold mb-3">Next Steps</h3>
-              <ol className="space-y-3 text-sm text-white/90">
+              <h3 className="font-bold mb-3 text-black">Next Steps</h3>
+              <ol className="space-y-3 text-sm text-black/90">
                 <li className="flex items-start gap-2">
-                  <span className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 text-xs">1</span>
+                  <span className="w-5 h-5 bg-black/20 rounded-full flex items-center justify-center flex-shrink-0 text-xs">1</span>
                   <span>Copy the message above</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 text-xs">2</span>
+                  <span className="w-5 h-5 bg-black/20 rounded-full flex items-center justify-center flex-shrink-0 text-xs">2</span>
                   <span>Send via LinkedIn or email</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 text-xs">3</span>
+                  <span className="w-5 h-5 bg-black/20 rounded-full flex items-center justify-center flex-shrink-0 text-xs">3</span>
                   <span>Prepare for your chat!</span>
                 </li>
               </ol>
               <Link
                 to="/prep"
-                className="w-full mt-4 bg-white text-primary-600 font-semibold py-3 px-4 rounded-xl hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
+                className="w-full mt-4 bg-white text-coral font-semibold py-3 px-4 rounded-xl hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
               >
                 Prepare for Coffee Chat
                 <ArrowRight className="w-4 h-4" />
@@ -393,6 +420,36 @@ ${user?.name || 'Student'}`
                 <strong>Remember:</strong> The person you're nervous to message was once in your shoes.
                 Most professionals genuinely want to help students succeed.
               </p>
+            </motion.div>
+
+            {/* Ready to reach out section */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4 }}
+              className="card bg-gradient-to-br from-coral to-coral-light text-white"
+            >
+              <h3 className="font-bold mb-3 text-2xl">Ready to reach out?</h3>
+              <p className="text-white/90 mb-4">
+                We'll help you craft the perfect message.
+              </p>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <span className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center text-sm">📝</span>
+                  <span className="text-sm">Write Your Message</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center text-sm">☕</span>
+                  <span className="text-sm">Prepare for Coffee Chat</span>
+                </div>
+              </div>
+              <Link
+                to="/prep"
+                className="w-full mt-4 bg-white text-coral font-semibold py-3 px-4 rounded-xl hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
+              >
+                Prepare for Coffee Chat
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </motion.div>
           </div>
         </div>

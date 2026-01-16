@@ -199,23 +199,23 @@ function MentorDetail({ user, selectedMentor, setSelectedMentor }) {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
-              className="card bg-gradient-to-br from-primary-500 to-accent-500 text-white"
+              className="card bg-gradient-to-br from-coral to-coral-light text-white"
             >
-              <h3 className="font-bold mb-2">Ready to reach out?</h3>
-              <p className="text-white/80 text-sm mb-4">
+              <h3 className="font-bold mb-2 text-black">Ready to reach out?</h3>
+              <p className="text-black/80 text-sm mb-4">
                 We'll help you craft the perfect message.
               </p>
               <div className="space-y-3">
                 <Link
                   to="/email"
-                  className="w-full bg-white text-primary-600 font-semibold py-3 px-4 rounded-xl hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-white text-coral font-semibold py-3 px-4 rounded-xl hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
                 >
                   <Mail className="w-4 h-4" />
                   Write Your Message
                 </Link>
                 <Link
                   to="/prep"
-                  className="w-full bg-white/20 text-white font-semibold py-3 px-4 rounded-xl hover:bg-white/30 transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-white/20 text-black font-semibold py-3 px-4 rounded-xl hover:bg-white/30 transition-all flex items-center justify-center gap-2"
                 >
                   <Calendar className="w-4 h-4" />
                   Prepare for Coffee Chat
