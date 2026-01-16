@@ -10,8 +10,9 @@ let model = null;
 if (config.geminiApiKey) {
   try {
     genAI = new GoogleGenerativeAI(config.geminiApiKey);
-    model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    console.log('✅ Gemini AI initialized successfully');
+    // Use the most generous free model: gemini-2.5-flash-lite
+    model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
+    console.log('✅ Gemini AI initialized successfully (gemini-2.5-flash-lite)');
   } catch (error) {
     console.error('❌ Failed to initialize Gemini AI:', error.message);
     genAI = null;
@@ -130,8 +131,12 @@ Return only valid JSON with this exact structure:
       const result = await model.generateContent(prompt);
       console.log('✅ Gemini API call successful');
       const response = await result.response;
-      const responseText = response.text();
-      console.log('📄 Gemini response received:', responseText.substring(0, 100) + '...');
+      let responseText = response.text();
+      console.log('📄 Raw Gemini response:', responseText.substring(0, 150) + '...');
+
+      // Clean up Gemini's markdown formatting
+      responseText = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      console.log('🧹 Cleaned response:', responseText.substring(0, 100) + '...');
 
       const generated = JSON.parse(responseText);
       console.log('🎯 Parsed Gemini response:', { subject: generated.subject?.substring(0, 50) });
