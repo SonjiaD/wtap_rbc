@@ -1,166 +1,133 @@
-# Launchpad - Confidence-First Coffee Chat Coach
+# Approachable - Confidence-First Mentorship Platform
 
-> Turn anxiety into confident connections.
+> Go at your own pace. Building confidence through real human interaction.
 
-Launchpad is a web application designed to help students overcome social anxiety and build real professional relationships through mentorship. Instead of just matching students with mentors, Launchpad addresses the psychological barriers that prevent students from reaching out in the first place.
+## About
 
-## The Problem
+**Approachable** is a digital mentorship platform that transforms how people access mentorship by addressing the psychological barriers that prevent meaningful connections. Instead of generic matching algorithms, Approachable helps users clarify their goals, build confidence, and form mentorship relationships that feel natural and sustainable.
 
-Most students don't struggle with *finding* mentors — they struggle with:
-- Anxiety about reaching out
-- Not knowing what to say
-- Feeling unqualified or like an imposter
-- Fear of being a burden
-- Not knowing how to maintain relationships
+## The Idea & Reason
 
-## The Solution
+Living in the digital age can be both a blessing and a curse. While information and people are more accessible than ever, the abundance of online advice and surface-level connections has made it harder to genuinely access mentorship, build meaningful relationships, and support long-term growth.
 
-Launchpad is a step-by-step system that:
-1. **Identifies your challenges** - Understand what's holding you back
-2. **Finds relatable people** - Connect with mentors who share your background
-3. **Crafts your message** - Generate personalized outreach that sounds like you
-4. **Prepares you for coffee chats** - Questions, talking points, and agenda
-5. **Tracks your growth** - See your confidence increase over time
+Due to increasing reliance on AI assistants and lack of self-reflection:
+- People feel anxious approaching those in higher positions
+- They're unsure what they actually want out of mentorship
+- Conversations feel awkward, transactional, or short-lived
+- Many turn to the internet or AI to draft generic scripts, constantly molding themselves to what "everyone else" has done, instead of showing up as who they are
 
-## Features
+**Mentorship doesn't fail due to lack of access. It fails because people don't feel ready or confident to engage meaningfully.**
 
-- **Challenge Survey** - Multi-step assessment to understand your networking anxieties
-- **Smart Matching** - Find mentors based on industry, identity, and shared experiences
-- **AI Email Generator** - Create personalized cold outreach messages
-- **Coffee Chat Prep** - Suggested agenda, questions, and talking points
-- **Reflection System** - Post-chat reflection to track anxiety levels and growth
-- **Progress Dashboard** - Visualize your confidence journey with achievements
+## Challenge & Solution
+
+**Challenge**: Create a digital solution that enhances the mentorship experience in any context, whether personal, academic, professional or community-based. Your tool should help people more easily access mentorship, build meaningful connections, and support growth.
+
+**Our Solution**: Approachable helps people create their own script - based on their own goals, challenges, and strengths - instead of telling users what to say.
+
+### How We Solve It
+
+#### Reflection-Based Quiz
+Users complete a short quiz that prompts them to reflect on:
+- Their challenges
+- Personal and career goals
+- Interests and hobbies
+
+This clarifies what they want from mentorship before they ever reach out.
+
+#### Intentional Matching
+All users take the quiz and are matched with people who share similar interests or challenges. Mentors are matched just one level above the user, making conversations feel approachable, not intimidating.
+
+#### Confidence-Building Connections
+Users initially connect with mentors slightly ahead of them. As they build more connections, they unlock access to people at higher levels, gradually reducing anxiety and building confidence over time.
+
+#### Mutual Verification & Network Growth
+When two users confirm they've chatted, they mutually unlock access to each other's networks, encouraging real, meaningful engagement rather than one-off conversations.
+
+## Impact
+
+The value Approachable creates by:
+- **Improving access to mentorship** through psychological preparation and confidence-building
+- **Enhancing mentorship quality** by fostering genuine, reflective conversations
+- **Supporting meaningful growth** for mentors and mentees across personal, academic, professional, and community contexts
+
+## Innovation
+
+Approachable's originality lies in its focus on the human side of mentorship technology. While most platforms focus on algorithms and AI generation, we prioritize:
+- **Self-reflection over automation**
+- **Gradual confidence building over instant matching**
+- **Authentic relationship development over transactional connections**
+- **Technology that prompts human insight rather than replacing it**
+
+## Use of Technology
+
+Our technical implementation effectively leverages modern web technologies to solve the mentorship confidence problem:
+
+- **React 18 + Vite**: Fast, interactive user experience for reflection and matching
+- **Node.js/Express**: Scalable backend for survey processing and mentor matching
+- **Tailwind CSS + Framer Motion**: Beautiful, animated interface that feels supportive
+- **Progressive Web App**: Accessible across devices for anytime confidence building
+
+## Main Goals & Targets
+
+1. **"I don't know what I actually want from the mentorship conversation"**
+   - Clarify user goals for mentorship relationships
+   - Develop foundation for meaningful conversation
+
+2. **"I find it hard to build a connection with my mentor that doesn't feel transactional"**
+   - Match mentors with mentees who have similar interests
+   - Encourage authentic relationship development
+
+3. **"I feel anxious speaking to people in a higher position than me"**
+   - Build confidence through gradual networking progression
+   - Provide psychological preparation tools
+
+## Statistics & Problem Validation
+
+*[Statistics proving the problem exists would be inserted here]*
 
 ## Tech Stack
 
 - **Frontend**: React 18, Vite, Tailwind CSS, Framer Motion
 - **Backend**: Node.js, Express
-- **Styling**: Tailwind CSS with custom components
-- **Icons**: Lucide React
+- **Database**: JSON-based (easily replaceable with MongoDB/PostgreSQL)
+- **Deployment**: Ready for Vercel/Netlify + Railway/Render
 
 ## Getting Started
 
 ### Prerequisites
-
 - Node.js 18+
 - npm or yarn
 
 ### Installation
-
-1. Clone the repository:
 ```bash
 git clone <repo-url>
-cd launchpad
-```
-
-2. Install all dependencies:
-```bash
+cd approachable
 npm run install:all
 ```
 
-Or install separately:
+### Development
 ```bash
-# Root dependencies
-npm install
-
-# Backend dependencies
-cd backend && npm install
-
-# Frontend dependencies
-cd ../frontend && npm install
+npm run dev  # Runs both frontend (port 5176) and backend (port 3001)
 ```
 
-3. Set up environment variables:
-```bash
-cd backend
-cp .env.example .env
-# Edit .env with your settings (optional: add OpenAI API key for AI features)
-```
+Open http://localhost:5176 to see the application.
 
-### Running the Application
+## Features
 
-Development mode (both frontend and backend):
-```bash
-npm run dev
-```
-
-Or run separately:
-```bash
-# Terminal 1 - Backend (port 3001)
-npm run dev:backend
-
-# Terminal 2 - Frontend (port 5173)
-npm run dev:frontend
-```
-
-Open http://localhost:5173 in your browser.
-
-## Project Structure
-
-```
-launchpad/
-├── backend/
-│   ├── src/
-│   │   ├── server.js          # Express server entry
-│   │   ├── routes/
-│   │   │   ├── survey.js      # User profile & survey
-│   │   │   ├── mentors.js     # Mentor matching
-│   │   │   ├── email.js       # Email generation
-│   │   │   ├── prep.js        # Coffee chat prep
-│   │   │   └── reflection.js  # Post-chat reflection
-│   │   └── data/
-│   │       └── mentors.js     # Sample mentor data
-│   └── package.json
-├── frontend/
-│   ├── src/
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   ├── index.css
-│   │   ├── components/
-│   │   │   └── Layout.jsx
-│   │   └── pages/
-│   │       ├── Landing.jsx
-│   │       ├── Survey.jsx
-│   │       ├── Matches.jsx
-│   │       ├── MentorDetail.jsx
-│   │       ├── EmailGenerator.jsx
-│   │       ├── PrepChat.jsx
-│   │       ├── Reflection.jsx
-│   │       └── Progress.jsx
-│   ├── index.html
-│   └── package.json
-└── package.json
-```
+- **Challenge Survey** - Multi-step assessment to understand networking anxieties
+- **Smart Matching** - Level-based mentor matching with shared interests
+- **AI Email Generator** - Personalized outreach message creation
+- **Coffee Chat Prep** - Agenda, questions, and talking points
+- **Reflection System** - Post-chat anxiety tracking and growth monitoring
+- **Progress Dashboard** - Confidence journey visualization
 
 ## API Endpoints
 
-### Survey
-- `GET /api/survey/options` - Get survey options
-- `POST /api/survey/submit` - Submit survey and create profile
-- `GET /api/survey/profile/:userId` - Get user profile
-
-### Mentors
-- `GET /api/mentors` - Get all mentors
-- `POST /api/mentors/match` - Get matched mentors
-- `GET /api/mentors/:id` - Get single mentor
-
-### Email
-- `POST /api/email/generate` - Generate outreach email
-- `POST /api/email/variations` - Get email style variations
-
-### Prep
-- `POST /api/prep/generate` - Generate coffee chat prep materials
-
-### Reflection
-- `POST /api/reflection/submit` - Submit post-chat reflection
-- `GET /api/reflection/progress/:userId` - Get user progress
-- `POST /api/reflection/outreach` - Log outreach sent
-
-## Pitch
-
-> "Raise your hand if you've ever wanted to reach out to someone on LinkedIn but felt too nervous to press send."
-
-Most mentorship tools assume students are confident. But the students who need mentorship the most are often the ones too anxious to reach out. Launchpad doesn't just connect people — it transforms confidence.
+- `POST /api/survey/submit` - Submit user profile and preferences
+- `POST /api/mentors/match` - Get personalized mentor matches
+- `POST /api/email/generate` - Create outreach messages
+- `POST /api/prep/generate` - Generate conversation preparation
+- `POST /api/reflection/submit` - Track post-chat growth
 
 ## License
 
