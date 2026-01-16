@@ -187,7 +187,7 @@ function Survey({ user, setUser }) {
 
   const canProceed = () => {
     switch (step) {
-      case 0: return formData.name.trim() !== '' && formData.school.trim() !== '' && formData.yearLevel !== ''
+      case 0: return formData.name.trim() !== '' && formData.school.trim() !== ''
       case 1: return formData.whereYouWantToBe.trim() !== ''
       case 2: return formData.challenges.length > 0
       case 3: return formData.goals.length > 0
@@ -623,6 +623,38 @@ function Survey({ user, setUser }) {
           </motion.div>
         </AnimatePresence>
       </div>
+      {/* Floating red pandas for fun */}
+      <motion.div
+        className="fixed top-20 right-10 z-10"
+        animate={{
+          y: [0, -10, 0],
+          rotate: [0, 5, -5, 0]
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
+        <RedPanda size="sm" mood="happy" />
+      </motion.div>
+
+      <motion.div
+        className="fixed bottom-20 left-10 z-10"
+        animate={{
+          y: [0, 10, 0],
+          x: [0, 5, 0]
+        }}
+        transition={{
+          duration: 5,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1
+        }}
+      >
+        <RedPanda size="xs" mood="shy" />
+      </motion.div>
+
       {stickers.map(sticker => (
         <Sticker key={sticker.id} emoji={sticker.emoji} />
       ))}

@@ -241,14 +241,19 @@ function Matches({ user, setSelectedMentor }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="mt-12 text-center"
+          className="mt-12 text-center space-y-4"
         >
           <p className="text-slate-600 mb-4">
             Don't see the right match? More mentors coming soon.
           </p>
-          <Link to="/survey" className="text-primary-600 font-medium hover:underline">
-            Update your preferences
-          </Link>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link to="/survey" className="btn-secondary">
+              Edit Survey Answers
+            </Link>
+            <Link to="/survey" className="text-primary-600 font-medium hover:underline">
+              Update your preferences
+            </Link>
+          </div>
         </motion.div>
       </div>
     </div>

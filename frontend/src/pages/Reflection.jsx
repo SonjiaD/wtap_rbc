@@ -192,6 +192,29 @@ function Reflection({ user, mentor }) {
                 Find Another Mentor
               </Link>
             </div>
+
+            {/* Verification */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="mt-8 p-6 bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl border-2 border-green-200"
+            >
+              <h3 className="font-bold text-green-800 mb-3 flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5" />
+                Verify Your Connection
+              </h3>
+              <p className="text-green-700 mb-4">
+                When both you and {mentor?.name} confirm you've chatted, you'll unlock each other's networks and get access to more mentorship opportunities!
+              </p>
+              <button className="btn-primary bg-green-600 hover:bg-green-700 flex items-center gap-2 mx-auto">
+                <CheckCircle2 className="w-4 h-4" />
+                Mark Chat as Verified
+              </button>
+              <p className="text-xs text-green-600 mt-2 text-center">
+                This helps us build a stronger community of verified connections
+              </p>
+            </motion.div>
           </div>
         </div>
       </motion.div>

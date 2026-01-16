@@ -10,35 +10,47 @@ const userProfiles = new Map();
 // Get survey options
 router.get('/options', (req, res) => {
   res.json({
-    anxietyTypes,
+    challenges: anxietyTypes,
     industries,
     identities,
     goals: [
-      { id: "career", label: "Career advice", description: "Learn about different career paths" },
-      { id: "industry", label: "Industry insights", description: "Understand what it's like to work in a field" },
-      { id: "skills", label: "Skill development", description: "Learn what skills to develop" },
-      { id: "network", label: "Build network", description: "Expand my professional connections" },
-      { id: "confidence", label: "Build confidence", description: "Get more comfortable with networking" }
+      { id: 'experiences', label: "Getting to know other people's experiences", description: 'Learn from their journey' },
+      { id: 'career', label: 'Getting career advice', description: 'Understand different paths' },
+      { id: 'industry', label: 'Learning about an industry', description: "What's it really like?" },
+      { id: 'skills', label: 'Figuring out what skills to develop', description: 'What should I learn?' },
+      { id: 'network', label: 'Building my professional network', description: 'Make real connections' },
+      { id: 'confidence', label: 'Building confidence in networking', description: 'Get more comfortable' }
+    ],
+    yearLevels: [
+      { id: 'year1', label: '1st Year', description: 'Just starting out' },
+      { id: 'year2', label: '2nd Year', description: 'Finding my path' },
+      { id: 'year3', label: '3rd Year', description: 'Getting serious' },
+      { id: 'year4', label: '4th Year+', description: 'Almost there' },
+      { id: 'grad', label: 'Graduate Student', description: 'Advanced studies' },
+      { id: 'recent', label: 'Recent Graduate', description: 'Just finished' }
     ],
     personalityStyles: [
-      { id: "direct", label: "Direct & to the point", description: "I prefer concise, efficient communication" },
-      { id: "warm", label: "Warm & personable", description: "I like building rapport and connection" },
-      { id: "curious", label: "Curious & inquisitive", description: "I love asking lots of questions" },
-      { id: "thoughtful", label: "Thoughtful & prepared", description: "I prefer to research and prepare thoroughly" }
+      { id: 'direct', label: 'Direct & to the point', description: 'Keep it short and sweet' },
+      { id: 'warm', label: 'Warm & personable', description: 'I like building rapport' },
+      { id: 'curious', label: 'Curious & inquisitive', description: 'Lots of questions!' },
+      { id: 'thoughtful', label: 'Thoughtful & prepared', description: 'I research beforehand' }
     ]
   });
 });
 
 // Submit survey and create user profile
 router.post('/submit', (req, res) => {
-  const { anxieties, industries, identities, goals, personalityStyle, name, school } = req.body;
+  const { challenges, industries, identities, goals, personalityStyle, name, school, yearLevel, whereYouWantToBe, mentorLevels } = req.body;
 
   const userId = uuidv4();
   const profile = {
     id: userId,
     name: name || "Student",
     school: school || "University",
-    anxieties: anxieties || [],
+    yearLevel: yearLevel || "",
+    whereYouWantToBe: whereYouWantToBe || "",
+    mentorLevels: mentorLevels || 1,
+    challenges: challenges || [],
     industries: industries || [],
     identities: identities || [],
     goals: goals || [],
@@ -52,16 +64,17 @@ router.post('/submit', (req, res) => {
   userProfiles.set(userId, profile);
 
   // Generate personalized insight
-  const primaryAnxiety = anxietyTypes.find(a => a.id === anxieties?.[0]);
-  const insight = primaryAnxiety
-    ? `We understand you're nervous about ${primaryAnxiety.label.toLowerCase()}. We'll help you structure your outreach to feel more confident.`
+  const primaryChallenge = challenges?.[0];
+  const challengeData = anxietyTypes.find(a => a.id === primaryChallenge);
+  const insight = challengeData
+    ? `We understand you're nervous about ${challengeData.label.toLowerCase()}. We'll help you structure your outreach to feel more confident.`
     : "We'll help you build confidence in reaching out to professionals.";
 
   res.json({
     userId,
     profile,
     insight,
-    tips: primaryAnxiety?.tips || ["Take it one step at a time", "Everyone starts somewhere"]
+    tips: challengeData?.tips || ["Take it one step at a time", "Everyone starts somewhere"]
   });
 });
 
