@@ -4,7 +4,7 @@
   "description": "Launchpad - Confidence-First Coffee Chat Coach. Turn anxiety into confident connections.",
   "scripts": {
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev": "npm run dev:frontend",
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm run dev",
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",

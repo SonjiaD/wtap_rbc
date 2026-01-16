@@ -53,7 +53,7 @@ function EmailGenerator({ user, mentor }) {
         })
       })
       const data = await res.json()
-      setEmail({ subject: data.subject, body: data.body })
+      setEmail({ subject: data.subject, body: data.body, source: data.source })
     } catch (err) {
       console.error('Failed to generate email:', err)
       // Fallback template

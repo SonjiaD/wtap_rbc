@@ -1,6 +1,7 @@
+import { config } from './config.js';
+
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import surveyRoutes from './routes/survey.js';
 import mentorRoutes from './routes/mentors.js';
 import emailRoutes from './routes/email.js';
@@ -8,10 +9,13 @@ import prepRoutes from './routes/prep.js';
 import reflectionRoutes from './routes/reflection.js';
 import mentorSearchRoutes from './routes/mentor-search.js';
 
-dotenv.config();
+console.log('🔍 Environment check:');
+console.log('PORT:', config.port);
+console.log('GEMINI_API_KEY exists:', !!config.geminiApiKey);
+console.log('USE_AI:', config.useAI);
 
 const app = express();
-const PORT = process.env.PORT || 3002;
+const PORT = config.port;
 
 // Middleware
 app.use(cors());

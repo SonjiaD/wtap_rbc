@@ -1,14 +1,24 @@
 import express from 'express';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { config } from '../config.js';
 
 const router = express.Router();
 
 // Initialize Gemini AI client (optional - will fall back to templates if not configured)
 let genAI = null;
 let model = null;
-if (process.env.GEMINI_API_KEY) {
-  genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+if (config.geminiApiKey) {
+  try {
+    genAI = new GoogleGenerativeAI(config.geminiApiKey);
+    model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    console.log('✅ Gemini AI initialized successfully');
+  } catch (error) {
+    console.error('❌ Failed to initialize Gemini AI:', error.message);
+    genAI = null;
+    model = null;
+  }
+} else {
+  console.log('⚠️  No GEMINI_API_KEY found, using template fallback');
 }
 
 // Email templates based on personality style
@@ -82,7 +92,7 @@ router.post('/generate', async (req, res) => {
 
   try {
     // Try AI generation if Gemini is configured
-    if (model && process.env.USE_AI === 'true') {
+    if (model && config.useAI) {
       const prompt = `You are an expert career counselor helping students write authentic, personalized cold outreach emails to potential mentors.
 
 Generate a compelling cold outreach email for a student reaching out to a professional mentor. The email should feel genuine, respectful, and confident - not generic or robotic.
@@ -116,9 +126,15 @@ Return only valid JSON with this exact structure:
   "body": "The complete email body with proper greeting and signature"
 }`;
 
+      console.log('🤖 Attempting Gemini API call...');
       const result = await model.generateContent(prompt);
+      console.log('✅ Gemini API call successful');
       const response = await result.response;
-      const generated = JSON.parse(response.text());
+      const responseText = response.text();
+      console.log('📄 Gemini response received:', responseText.substring(0, 100) + '...');
+
+      const generated = JSON.parse(responseText);
+      console.log('🎯 Parsed Gemini response:', { subject: generated.subject?.substring(0, 50) });
 
       return res.json({
         subject: generated.subject,
