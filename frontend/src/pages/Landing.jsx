@@ -243,12 +243,7 @@ function Landing() {
                   className="relative"
                 >
                   <div className="card text-center relative z-10 hover:-translate-y-2 transition-transform">
-                    {/* Panda that grows with each step */}
-                    <div className="absolute -top-6 left-1/2 -translate-x-1/2">
-                      <JourneyPanda progress={(index + 1) * 20} />
-                    </div>
-
-                    <div className={`w-14 h-14 bg-gradient-to-br ${feature.color} rounded-2xl flex items-center justify-center mx-auto mb-4 mt-8 shadow-lg`}>
+                    <div className={`w-14 h-14 bg-gradient-to-br ${feature.color} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg`}>
                       <feature.icon className="w-7 h-7 text-white" />
                     </div>
 
