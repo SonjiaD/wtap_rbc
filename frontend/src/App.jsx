@@ -8,6 +8,7 @@ import EmailGenerator from './pages/EmailGenerator'
 import PrepChat from './pages/PrepChat'
 import Reflection from './pages/Reflection'
 import Progress from './pages/Progress'
+import Invite from './pages/Invite'
 import Layout from './components/Layout'
 
 function App() {
@@ -45,6 +46,10 @@ function App() {
         <Route
           path="/progress"
           element={<Progress user={user} />}
+        />
+        <Route
+          path="/invite"
+          element={<Invite />}
         />
       </Routes>
     </Layout>

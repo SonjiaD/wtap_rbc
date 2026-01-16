@@ -1,36 +1,53 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Rocket, Home, BarChart3 } from 'lucide-react'
+import { Home, BarChart3, Users, Send } from 'lucide-react'
+import RedPanda from './RedPanda'
 
 function Layout({ children }) {
   const location = useLocation()
   const isLanding = location.pathname === '/'
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-cream">
       {!isLanding && (
-        <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+        <nav className="bg-white/90 backdrop-blur-md border-b-3 border-sky/30 sticky top-0 z-50">
           <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform">
-                <Rocket className="w-5 h-5 text-white" />
+            <Link to="/" className="flex items-center gap-3 group">
+              <div className="group-hover:animate-wiggle transition-transform">
+                <RedPanda size="xs" mood="happy" animate={false} />
               </div>
-              <span className="font-bold text-xl gradient-text">Launchpad</span>
+              <span className="font-display font-bold text-2xl gradient-text-blue">
+                approachable
+              </span>
             </Link>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
               <Link
                 to="/"
-                className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                className="p-3 rounded-full hover:bg-lavender/50 transition-all duration-300"
                 title="Home"
               >
-                <Home className="w-5 h-5 text-slate-600" />
+                <Home className="w-5 h-5 text-royal" />
+              </Link>
+              <Link
+                to="/matches"
+                className="p-3 rounded-full hover:bg-lavender/50 transition-all duration-300"
+                title="Find Mentors"
+              >
+                <Users className="w-5 h-5 text-royal" />
+              </Link>
+              <Link
+                to="/invite"
+                className="p-3 rounded-full hover:bg-lavender/50 transition-all duration-300"
+                title="Invite Others"
+              >
+                <Send className="w-5 h-5 text-royal" />
               </Link>
               <Link
                 to="/progress"
-                className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                className="p-3 rounded-full hover:bg-lavender/50 transition-all duration-300"
                 title="Your Progress"
               >
-                <BarChart3 className="w-5 h-5 text-slate-600" />
+                <BarChart3 className="w-5 h-5 text-royal" />
               </Link>
             </div>
           </div>
@@ -41,8 +58,19 @@ function Layout({ children }) {
         {children}
       </main>
 
-      <footer className="py-6 text-center text-sm text-slate-500 border-t border-slate-200 bg-white/50">
-        <p>Built with care for students who want to build meaningful connections</p>
+      <footer className="py-8 text-center border-t-3 border-sky/20 bg-white/70">
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <RedPanda size="xs" mood="happy" animate={false} />
+          <span className="font-display font-bold text-royal">approachable</span>
+        </div>
+        <p className="text-sm text-slate-500 font-medium">
+          Built with love for students who want to make meaningful connections
+        </p>
+        <div className="flex items-center justify-center gap-4 mt-3 text-xs text-slate-400">
+          <span>Made by students, for students</span>
+          <span>|</span>
+          <span>Your journey starts here</span>
+        </div>
       </footer>
     </div>
   )
