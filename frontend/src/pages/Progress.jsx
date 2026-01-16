@@ -251,7 +251,7 @@ function Progress({ user }) {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
-              className="card bg-gradient-to-br from-primary-500 to-accent-500 text-white"
+              className="card bg-gradient-to-br from-primary-500 to-accent-500 text-black"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
@@ -259,7 +259,7 @@ function Progress({ user }) {
                 </div>
                 <div>
                   <h3 className="font-bold">Next Milestone</h3>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-black/80 text-sm">
                     {progress?.nextMilestone?.label || "Keep going!"}
                   </p>
                 </div>
