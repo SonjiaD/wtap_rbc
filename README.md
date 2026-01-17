@@ -62,11 +62,12 @@ Approachable's originality lies in its focus on the human side of mentorship tec
 
 Our technical implementation effectively leverages modern web technologies and AI to solve the mentorship confidence problem:
 
-- **🤖 Google Gemini 1.5 Flash Integration**: Advanced AI email personalization that creates authentic, mentor-specific outreach messages based on detailed user and mentor profiles (free tier with generous limits)
-- **🔍 Google Custom Search Integration**: Real-time mentor discovery using Google search to find actual professionals in specific industries and locations
-- **⚛️ React 18 + Vite**: Fast, interactive user experience for reflection and matching
+- **🤖 Google Gemini 2.5 Flash Lite**: Advanced AI email personalization that creates authentic, mentor-specific outreach messages based on detailed user and mentor profiles (free tier with generous limits)
+- **🔍 Google Custom Search API**: Real-time mentor discovery using Google search to find actual professionals in specific industries and locations
+- **⚛️ React 18 + Vite 5**: Fast, interactive user experience for reflection and matching
 - **🚀 Node.js/Express**: Scalable backend for survey processing and mentor matching
-- **🎨 Tailwind CSS + Framer Motion**: Beautiful, animated interface that feels supportive
+- **🎨 Tailwind CSS 3 + Framer Motion**: Beautiful, animated interface that feels supportive
+- **🎯 Lucide React**: Clean, consistent iconography throughout the application
 - **📱 Progressive Web App**: Accessible across devices for anytime confidence building
 
 ## 🎯 Main Goals & Targets
@@ -93,16 +94,50 @@ Our technical implementation effectively leverages modern web technologies and A
 
 ## Tech Stack
 
-- **Frontend**: React 18, Vite, Tailwind CSS, Framer Motion
-- **Backend**: Node.js, Express
-- **Database**: JSON-based (easily replaceable with MongoDB/PostgreSQL)
-- **Deployment**: Ready for Vercel/Netlify + Railway/Render
+### Frontend
+- **React 18** - Modern React with hooks and functional components
+- **Vite 5** - Fast build tool and development server
+- **React Router DOM 6** - Client-side routing
+- **Tailwind CSS 3** - Utility-first styling
+- **Framer Motion** - Smooth animations and transitions
+- **Lucide React** - Beautiful, consistent icons
+
+### Backend
+- **Node.js** - JavaScript runtime (ES Modules)
+- **Express 4** - Web framework for API routes
+- **@google/generative-ai** - Gemini 2.5 Flash Lite for AI-powered email generation
+- **googleapis** - Google Custom Search for real-time mentor discovery
+
+### External APIs
+- **Google Gemini AI** - Personalized email generation with context-aware prompts
+- **Google Custom Search** - Real-time professional/mentor discovery
+
+### Data & Deployment
+- **JSON-based storage** - Lightweight, easily replaceable with MongoDB/PostgreSQL
+- **Deployment ready** - Vercel/Netlify (frontend) + Railway/Render (backend)
 
 ## Getting Started
 
 ### Prerequisites
 - Node.js 18+
 - npm or yarn
+
+### Environment Variables
+Create a `.env` file in the `backend` directory:
+
+```env
+# Required for AI-powered email generation
+GEMINI_API_KEY=your_gemini_api_key
+USE_AI=true
+
+# Optional: For real-time mentor discovery via Google Search
+GOOGLE_SEARCH_API_KEY=your_google_api_key
+GOOGLE_SEARCH_ENGINE_ID=your_search_engine_id
+
+# Server config
+PORT=3002
+NODE_ENV=development
+```
 
 ### Installation
 ```bash
@@ -113,29 +148,76 @@ npm run install:all
 
 ### Development
 ```bash
-npm run dev  # Runs both frontend (port 5176) and backend (port 3001)
+# Run frontend only (with API proxy to backend)
+npm run dev
+
+# Run backend separately in another terminal
+npm run dev:backend
 ```
 
-Open http://localhost:5176 to see the application.
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:3002
 
 ## Features
 
-- **Challenge Survey** - Multi-step assessment to understand networking anxieties
-- **Smart Matching** - Level-based mentor matching with shared interests
-- **AI Email Generator** - Personalized outreach message creation
-- **Coffee Chat Prep** - Agenda, questions, and talking points
-- **Reflection System** - Post-chat anxiety tracking and growth monitoring
-- **Progress Dashboard** - Confidence journey visualization
+- **Reflection-Based Survey** - Multi-step assessment to understand networking anxieties, goals, and interests
+- **Smart Mentor Matching** - Level-based mentor matching with shared interests and background
+- **AI Email Generator** - Personalized outreach emails powered by Google Gemini 2.5 Flash Lite with multiple personality styles (direct, warm, curious, thoughtful)
+- **Real-Time Mentor Discovery** - Find actual professionals via Google Custom Search integration
+- **Coffee Chat Prep** - Agenda, questions, and talking points for meaningful conversations
+- **Post-Chat Reflection** - Track anxiety levels and growth after mentor interactions
+- **Progress Dashboard** - Visualize your confidence-building journey over time
+- **Invite System** - Grow your network by inviting others to the platform
 
 ## API Endpoints
 
-- `POST /api/survey/submit` - Submit user profile and preferences
-- `POST /api/mentors/match` - Get personalized mentor matches
-- `POST /api/email/generate` - Create AI-powered outreach messages
-- `POST /api/prep/generate` - Generate conversation preparation
-- `POST /api/reflection/submit` - Track post-chat growth
-- `POST /api/mentor-search/search` - Search for real mentors via Google
-- `POST /api/mentor-search/suggest` - Get AI-suggested mentors based on profile
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/survey/submit` | Submit user profile and preferences |
+| `POST /api/mentors/match` | Get personalized mentor matches |
+| `POST /api/email/generate` | Generate AI-powered outreach email (Gemini) |
+| `POST /api/email/variations` | Get email variations in all personality styles |
+| `POST /api/prep/generate` | Generate conversation preparation materials |
+| `POST /api/reflection/submit` | Track post-chat reflections and growth |
+| `POST /api/mentor-search/search` | Search for real mentors via Google Custom Search |
+| `POST /api/mentor-search/suggest` | Get AI-suggested mentors based on user profile |
+
+## Project Structure
+
+```
+approachable/
+├── frontend/                 # React frontend application
+│   ├── src/
+│   │   ├── components/       # Reusable UI components
+│   │   ├── pages/            # Route-based page components
+│   │   │   ├── Landing.jsx   # Home page
+│   │   │   ├── Survey.jsx    # Reflection quiz
+│   │   │   ├── Matches.jsx   # Mentor matches list
+│   │   │   ├── MentorDetail.jsx
+│   │   │   ├── EmailGenerator.jsx
+│   │   │   ├── PrepChat.jsx
+│   │   │   ├── Reflection.jsx
+│   │   │   └── Progress.jsx
+│   │   ├── App.jsx           # Main app with routing
+│   │   └── main.jsx          # Entry point
+│   └── vite.config.js        # Vite configuration
+│
+├── backend/                  # Express API server
+│   └── src/
+│       ├── routes/
+│       │   ├── email.js      # AI email generation (Gemini)
+│       │   ├── mentor-search.js  # Google Custom Search
+│       │   ├── mentors.js    # Mentor matching
+│       │   ├── prep.js       # Chat preparation
+│       │   ├── reflection.js # Post-chat reflections
+│       │   └── survey.js     # Survey submission
+│       ├── data/
+│       │   └── mentors.js    # Sample mentor data
+│       ├── config.js         # Environment config
+│       └── server.js         # Express server entry
+│
+└── package.json              # Root scripts for monorepo
+```
 
 ## License
 
