@@ -16,8 +16,7 @@ import {
   MessageSquare
 } from 'lucide-react'
 import RedPanda, { JourneyPanda, Sticker } from '../components/RedPanda'
-
-const API_BASE = '/api'
+import { API_BASE } from '../config'
 
 function Survey({ user, setUser }) {
   const navigate = useNavigate()

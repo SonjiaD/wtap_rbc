@@ -13,8 +13,7 @@ import {
   ArrowRight,
   Sparkles
 } from 'lucide-react'
-
-const API_BASE = '/api'
+import { API_BASE } from '../config'
 
 function Progress({ user }) {
   const navigate = useNavigate()

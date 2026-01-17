@@ -18,7 +18,10 @@ const app = express();
 const PORT = config.port;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: config.corsOrigin,
+  credentials: true
+}));
 app.use(express.json());
 
 // Routes

@@ -9,5 +9,6 @@ export const config = {
   useAI: process.env.USE_AI === 'true',
   googleSearchApiKey: process.env.GOOGLE_SEARCH_API_KEY,
   googleSearchEngineId: process.env.GOOGLE_SEARCH_ENGINE_ID,
-  nodeEnv: process.env.NODE_ENV || 'development'
+  nodeEnv: process.env.NODE_ENV || 'development',
+  corsOrigin: process.env.CORS_ORIGIN || '*'
 };

@@ -12,8 +12,7 @@ import {
   Sparkles,
   Trophy
 } from 'lucide-react'
-
-const API_BASE = '/api'
+import { API_BASE } from '../config'
 
 function Reflection({ user, mentor }) {
   const navigate = useNavigate()

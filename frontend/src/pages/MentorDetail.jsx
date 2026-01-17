@@ -13,8 +13,7 @@ import {
   ExternalLink,
   CheckCircle2
 } from 'lucide-react'
-
-const API_BASE = '/api'
+import { API_BASE } from '../config'
 
 function MentorDetail({ user, selectedMentor, setSelectedMentor }) {
   const navigate = useNavigate()

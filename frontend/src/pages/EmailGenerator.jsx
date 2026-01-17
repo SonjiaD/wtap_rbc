@@ -13,8 +13,7 @@ import {
   Send,
   MessageSquare
 } from 'lucide-react'
-
-const API_BASE = '/api'
+import { API_BASE } from '../config'
 
 function EmailGenerator({ user, mentor }) {
   const navigate = useNavigate()
