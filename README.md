@@ -6,6 +6,13 @@
 
 **Approachable** is a digital mentorship platform that transforms how people access mentorship by addressing the psychological barriers that prevent meaningful connections. Instead of generic matching algorithms, Approachable helps users clarify their goals, build confidence, and form mentorship relationships that feel natural and sustainable.
 
+## 🏆 Award
+
+**3rd Place – WTAP Hackathon (Hosted by RBC)**
+*Issued by Royal Bank of Canada · January 2026*
+
+Placed 3rd out of 15 teams in a competitive hackathon hosted by Royal Bank of Canada (RBC). Collaborated with a team to design and prototype a digital solution aimed at enhancing mentorship experiences, from ideation to final pitch within a single-day sprint.
+
 ## 💡 The Idea & Reason
 
 Living in the digital age can be both a blessing and a curse. While information and people are more accessible than ever, the abundance of online advice and surface-level connections has made it harder to genuinely access mentorship, build meaningful relationships, and support long-term growth.
